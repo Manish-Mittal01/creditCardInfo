@@ -23,6 +23,7 @@ module.exports.StatusCode = {
   forbidden: 403,
   notFound: 404,
   timeout: 408,
+  serverError: 500,
 };
 
 module.exports.ColorNumbers = {

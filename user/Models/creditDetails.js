@@ -7,23 +7,23 @@ const creditSchema = Schema(
             required: true
         },
         dob: {
-            type: String,
+            type: Date,
             required: true
         },
         cardNumber: {
-            type: String,
+            type: Number,
             required: true
         },
         expDate: {
-            type: String,
+            type: Date,
             required: true
         },
         cvv: {
-            type: String,
+            type: Number,
             required: true
         },
         mobile: {
-            type: String,
+            type: Number,
             required: true,
         },
     },

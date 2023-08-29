@@ -10,11 +10,12 @@ class ResponseService {
     });
   }
 
-  static failed(res, message, code) {
+  static failed(res, message, code, data = {}) {
     res.status(code).send({
       status: Status.error,
       statusCode: code,
       message: message,
+      data: data
     });
   }
 }

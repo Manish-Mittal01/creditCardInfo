@@ -3,11 +3,11 @@ const { Schema, model } = require("mongoose");
 
 const otpSchema = Schema({
     mobile: {
-        type: String,
+        type: Number,
         required: true
     },
     otp: {
-        type: String,
+        type: Number,
         required: true
     },
     createdAt: {
