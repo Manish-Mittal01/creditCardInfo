@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const jwt = require("jsonwebtoken");
-const shortid = require("shortid");
 
 const userSchema = Schema(
   {

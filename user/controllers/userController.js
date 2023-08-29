@@ -5,7 +5,6 @@ const User = require("../Models/UserModel");
 const Otp = require("../Models/OtpModel");
 const { ResponseService } = require("../../common/responseService");
 const { StatusCode } = require("../../common/Constants");
-const { success, error } = require("../../common/Constants").Status;
 
 
 module.exports.sendOtp = async (req, res) => {
@@ -42,11 +41,8 @@ module.exports.sendOtp = async (req, res) => {
   \n your OTP is ${OTP}.
   \n Never share your otp with anyone`;
 
-  return res.status(200).send({
-    status: success,
-    message: `OTP sent successfully ${OTP}`,
-  });
 
+  return ResponseService.success(res, `OTP sent successfully ${OTP}`)
   // await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=6cFJuzYoEAtxRZ1sjgQPb8M3Ofd07pKTVe5LkaNyhBvGlqmISwyA6OrxTKaBNJu4EoYRw5XSbmQ37kLi&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
   //   .then((resp) => {
   //     return res.status(200).send({
