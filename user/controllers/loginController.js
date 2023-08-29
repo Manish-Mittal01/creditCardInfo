@@ -1,12 +1,8 @@
 const User = require("../Models/UserModel");
-const UserModel = require("../Models/UserModel");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { StatusCode } = require("../../common/Constants");
-const { UserController } = require("./userController");
 const { ResponseService } = require("../../common/responseService");
-const { LogService } = require("../../common/logService");
-const { success, error } = require("../../common/Constants").Status;
+const Admin = require("../../admin/models/adminModel")
 
 module.exports.login = async (req, res) => {
   const { mobile, password } = req.body;
@@ -19,35 +15,51 @@ module.exports.login = async (req, res) => {
     mobile: mobile,
   });
 
-  if (!user) {
+  const admin = await Admin.findOne({
+    mobile: mobile,
+  });
+
+
+  if (!user && !admin) {
     return ResponseService.failed(res, "User not Found", StatusCode.notFound);
   }
-  // else {
-  //   if (user.token !== token || user._id !== userId) return ResponseService.failed(res, "Invalid token or userId", StatusCode.unauthorized)
-  // }
 
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
-  if (user.mobile === mobile && isPasswordCorrect) {
-    const newUser = new User(user)
-    // const token = jwt.sign(
-    //   {
-    //     userId: user._id,
-    //     mobile: user.mobile,
-    //   },
-    //   process.env.JWT_SECRET_KEY,
-    //   { expiresIn: "7d" }
-    // );
+  if (user) {
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (user.mobile === mobile && isPasswordCorrect) {
+      const newUser = new User(user)
 
-    const token = newUser.generateJWT();
-    newUser.token = token
-    let result = await newUser.save()
-    result = result._doc
-    delete result.password
+      const token = newUser.generateJWT();
+      newUser.token = token
+      let result = await newUser.save()
+      result = {
+        ...result._doc,
+        role: "user"
+      }
+      delete result.password
 
+      return ResponseService.success(res, "Login successfully", result)
 
-    return ResponseService.success(res, "Login successfully", result)
+    } else {
+      return ResponseService.failed(res, "Incorrect Mobile or Password", StatusCode.badRequest);
+    }
+  }
+  else if (admin) {
+    const isPasswordCorrect = await bcrypt.compare(password, admin.password);
+    if (admin.mobile === mobile && isPasswordCorrect) {
+      const newAdmin = new Admin(admin)
+      const token = newAdmin.generateJWT()
+      newAdmin["token"] = token
+      let result = await newAdmin.save()
+      result = {
+        ...result._doc,
+        _id: admin._id,
+        role: "admin"
+      }
+      return ResponseService.success(res, "Login Successfully", result)
 
-  } else {
-    return ResponseService.failed(res, "Incorrect Mobile or Password", StatusCode.badRequest);
+    } else {
+      return ResponseService.failed(res, "Invalid Credentials", StatusCode.unauthorized)
+    }
   }
 };

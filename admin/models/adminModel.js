@@ -1,18 +1,17 @@
 const { Schema, model } = require("mongoose");
 const jwt = require("jsonwebtoken");
-const shortid = require("shortid");
 
 const adminSchema = Schema(
   {
-    userId: {
-      type: String,
-      default: shortid.generate,
-    },
     mobile: {
       type: String,
       required: true,
     },
     password: {
+      type: String,
+      required: true,
+    },
+    token: {
       type: String,
       required: true,
     },
