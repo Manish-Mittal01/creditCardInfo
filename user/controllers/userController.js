@@ -73,7 +73,7 @@ module.exports.register = async (req, res) => {
     mobile: mobile
   });
 
-  if (userExist) return ResponseService.failed(res, "Mobile Number already exist")
+  if (userExist) return ResponseService.failed(res, "Mobile Number already exist", StatusCode.forbidden)
 
 
   const otpHolder = await Otp.find({
