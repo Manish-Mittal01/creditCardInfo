@@ -12,16 +12,13 @@ module.exports.sendOtp = async (req, res) => {
     const { mobile } = req.body;
 
     if (!mobile) return ResponseService.failed(res, "mobile is required", StatusCode.badRequest);
+
     if (
-      mobile &&
-      (mobile.length !== 10 ||
-        !["6", "7", "8", "9"].includes(mobile.toString()[0]) ||
-        isNaN(Number(mobile)))
+      mobile.toString().length !== 10 ||
+      !["6", "7", "8", "9"].includes(mobile.toString()[0]) ||
+      isNaN(Number(mobile))
     ) return ResponseService.failed(res, "invalid mobile number", StatusCode.badRequest);
 
-    const user = await User.findOne({
-      mobile: mobile,
-    });
 
     // const OTP = otpGenerator.generate(6, {
     //   digits: true,
@@ -60,6 +57,7 @@ module.exports.sendOtp = async (req, res) => {
 
   }
   catch (error) {
+    console.log(error)
     return ResponseService.failed(res, "Something went wrong", StatusCode.serverError)
   }
 };

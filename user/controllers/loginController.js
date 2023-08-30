@@ -19,7 +19,7 @@ module.exports.login = async (req, res) => {
     const admin = await Admin.findOne({
       mobile: mobile,
     });
-
+    console.log("admin", admin)
 
     if (!user && !admin) {
       return ResponseService.failed(res, "User not Found", StatusCode.notFound);
