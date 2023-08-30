@@ -23,13 +23,17 @@ module.exports.addCreditCard = async (req, res) => {
         });
 
         if (!user) return ResponseService.failed(res, "Invalid userid or token", StatusCode.unauthorized);
+        const cardExist = await Credit.findOne({
+            cardNumber: cardNumber
+        })
+        if (cardExist) return ResponseService.failed(res, "Card already exist", StatusCode.forbidden)
 
-        const creditDetails = {
+        const newCreditCard = {
             userId: user._id,
             mobile, dob, cardNumber, expDate, cvv
         }
 
-        const credit = new Credit(creditDetails)
+        const credit = new Credit(newCreditCard)
         const result = await credit.save()
 
 

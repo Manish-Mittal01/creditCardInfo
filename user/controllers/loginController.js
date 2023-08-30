@@ -37,6 +37,7 @@ module.exports.login = async (req, res) => {
           ...result._doc,
           role: "user"
         }
+
         delete result.password
 
         return ResponseService.success(res, "Login successfully", result)

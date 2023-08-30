@@ -18,7 +18,7 @@ module.exports.userDetails = async (req, res) => {
             _id: adminid,
             token: token
         })
-        if (!admin) return ResponseService.failed(res, "invalid credentials", StatusCode.unauthorized)
+        if (!admin) return ResponseService.failed(res, "unauthorized", StatusCode.unauthorized)
 
         let user = await User.findOne({
             _id: userid

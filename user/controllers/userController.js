@@ -73,9 +73,11 @@ module.exports.register = async (req, res) => {
     if (!mobile) return ResponseService.failed(res, "mobile is required", StatusCode.badRequest);
     if (!otp) return ResponseService.failed(res, "otp is required", StatusCode.badRequest);
 
-    const userExist = User.findOne({
+    const userExist = await User.findOne({
       mobile: mobile
     });
+
+    console.log(userExist)
 
     if (userExist) return ResponseService.failed(res, "Mobile Number already exist", StatusCode.forbidden)
 
@@ -114,7 +116,6 @@ module.exports.register = async (req, res) => {
       result = {
         ...result._doc,
       }
-
       delete result.password
 
       return ResponseService.success(res, "User registered successfully", result)
