@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const adminSchema = Schema(
   {
     mobile: {
-      type: Number,
+      type: String,
       required: true,
     },
     password: {

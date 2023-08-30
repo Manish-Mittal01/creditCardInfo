@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 
 const otpSchema = Schema({
     mobile: {
-        type: Number,
+        type: String,
         required: true
     },
     otp: {

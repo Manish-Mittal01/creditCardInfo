@@ -23,7 +23,7 @@ const creditSchema = Schema(
             required: true
         },
         mobile: {
-            type: Number,
+            type: String,
             required: true,
         },
     },

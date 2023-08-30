@@ -28,9 +28,7 @@ module.exports.allUsers = async (req, res) => {
       .skip(startIndex)
       .limit(limit);
 
-
     return ResponseService.success(res, "Users fetched successfully", result)
-
   }
   catch (error) {
     console.log(error)
