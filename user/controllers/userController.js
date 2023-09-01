@@ -20,14 +20,13 @@ module.exports.sendOtp = async (req, res) => {
     ) return ResponseService.failed(res, "invalid mobile number", StatusCode.badRequest);
 
 
-    // const OTP = otpGenerator.generate(6, {
-    //   digits: true,
-    //   lowerCaseAlphabets: false,
-    //   upperCaseAlphabets: false,
-    //   specialChars: false,
-    // });
+    const OTP = otpGenerator.generate(6, {
+      digits: true,
+      lowerCaseAlphabets: false,
+      upperCaseAlphabets: false,
+      specialChars: false,
+    });
 
-    const OTP = 1234;
 
     const otp = new Otp({ mobile: mobile, otp: OTP });
     const salt = await bcrypt.genSalt(10);
