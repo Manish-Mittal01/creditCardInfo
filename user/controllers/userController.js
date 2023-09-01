@@ -36,24 +36,19 @@ module.exports.sendOtp = async (req, res) => {
     console.log(OTP);
 
     let msg = `Please use this code as your one time password (otp). It will expire in 3 minutes.
-  \n your OTP is ${OTP}.
-  \n Never share your otp with anyone`;
+   your OTP is ${OTP}.
+   Never share your otp with anyone`;
 
 
-    return ResponseService.success(res, `OTP sent successfully ${OTP}`)
-    // await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=6cFJuzYoEAtxRZ1sjgQPb8M3Ofd07pKTVe5LkaNyhBvGlqmISwyA6OrxTKaBNJu4EoYRw5XSbmQ37kLi&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
-    //   .then((resp) => {
-    //     return res.status(200).send({
-    //       status: success,
-    //       message: `OTP sent successfully ${OTP}`,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     return res.status(400).send({
-    //       status: false,
-    //       message: "something wrong happend while sending otp",
-    //     });
-    //   });
+    await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Qb5zd3MBhowEqeS6R4vDCukYFIyWKNg0H1OxTinrUZ2jXmtGJLGv7iIJkMZx5nSqhWRltozpOHYV1yC3&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
+      .then((resp) => {
+        return ResponseService.success(res, `OTP sent successfully ${OTP}`)
+      })
+      .catch((err) => {
+        console.log("otp err", err)
+        return ResponseService.failed(res, " something wrong happend while sending otp", StatusCode.serverError)
+
+      });
 
   }
   catch (error) {
@@ -77,10 +72,7 @@ module.exports.register = async (req, res) => {
       mobile: mobile
     });
 
-    console.log(userExist)
-
     if (userExist) return ResponseService.failed(res, "Mobile Number already exist", StatusCode.forbidden)
-
 
     const otpHolder = await Otp.find({
       mobile: mobile,
