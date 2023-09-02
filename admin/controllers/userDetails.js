@@ -23,13 +23,13 @@ module.exports.userDetails = async (req, res) => {
         let user = await User.findOne({
             _id: userid
         });
-        let credit = await Credit.findOne({
+        let credit = await Credit.find({
             userId: userid
         });
 
         const result = {
             ...user._doc,
-            ...credit?._doc
+            cardDetails: [...credit?._doc]
         }
 
         return ResponseService.success(res, "User details fetched successfully", result)
