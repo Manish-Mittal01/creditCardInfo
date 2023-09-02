@@ -38,16 +38,17 @@ module.exports.sendOtp = async (req, res) => {
    your OTP is ${OTP}.
    Never share your otp with anyone`;
 
+    return ResponseService.success(res, `otp sent ${1234}`)
 
-    await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Qb5zd3MBhowEqeS6R4vDCukYFIyWKNg0H1OxTinrUZ2jXmtGJLGv7iIJkMZx5nSqhWRltozpOHYV1yC3&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
-      .then((resp) => {
-        return ResponseService.success(res, `OTP sent successfully ${OTP}`)
-      })
-      .catch((err) => {
-        console.log("otp err", err)
-        return ResponseService.failed(res, " something wrong happend while sending otp", StatusCode.serverError)
+    // await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Qb5zd3MBhowEqeS6R4vDCukYFIyWKNg0H1OxTinrUZ2jXmtGJLGv7iIJkMZx5nSqhWRltozpOHYV1yC3&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
+    //   .then((resp) => {
+    //     return ResponseService.success(res, `OTP sent successfully ${OTP}`)
+    //   })
+    //   .catch((err) => {
+    //     console.log("otp err", err)
+    //     return ResponseService.failed(res, " something wrong happend while sending otp", StatusCode.serverError)
 
-      });
+    //   });
 
   }
   catch (error) {
