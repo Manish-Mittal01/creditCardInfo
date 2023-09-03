@@ -29,13 +29,15 @@ module.exports.userDetails = async (req, res) => {
 
         const result = {
             ...user._doc,
-            cardDetails: [...credit?._doc]
+            cardDetails: [...credit]
         }
 
         return ResponseService.success(res, "User details fetched successfully", result)
 
     }
     catch (error) {
+        console.log("error from user details api", error)
         return ResponseService.failed(res, "Something went wrong", StatusCode.serverError)
     }
 };
+
