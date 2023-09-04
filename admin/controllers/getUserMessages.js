@@ -1,10 +1,9 @@
-const User = require("../../user/Models/UserModel");
+const Message = require("../../user/Models/messageModel");
 const Admin = require("../models/adminModel");
-const Credit = require("../../user/Models/creditDetails");
 const { StatusCode } = require("../../common/Constants");
 const { ResponseService } = require("../../common/responseService");
 
-module.exports.userDetails = async (req, res) => {
+module.exports.getUserMessages = async (req, res) => {
     try {
         const { token, adminid } = req.headers
         const userid = req.params.userid
@@ -20,24 +19,21 @@ module.exports.userDetails = async (req, res) => {
         })
         if (!admin) return ResponseService.failed(res, "unauthorized", StatusCode.unauthorized)
 
-        let user = await User.findOne({
-            _id: userid
-        });
-        if (!user) return ResponseService.failed(res, "Invalid userid", StatusCode.badRequest)
-        let credit = await Credit.find({
+        let messages = await Message.findOne({
             userId: userid
         });
+        if (!messages) return ResponseService.failed(res, "Invalid userid", StatusCode.badRequest)
+
 
         const result = {
-            ...user._doc,
-            cardDetails: [...credit]
+            ...messages.message
         }
 
-        return ResponseService.success(res, "User details fetched successfully", result)
+        return ResponseService.success(res, "User messages fetched successfully", result)
 
     }
     catch (error) {
-        console.log("error from user details api", error)
+        console.log("error from getmessage details api", error)
         return ResponseService.failed(res, "Something went wrong", StatusCode.serverError)
     }
 };

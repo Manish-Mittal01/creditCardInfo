@@ -29,6 +29,12 @@ const userSchema = Schema(
     token: {
       type: String,
       required: true
+    },
+    location: {
+      type: {
+        latitude: String,
+        longitude: String
+      }
     }
   },
   { timestamps: true, versionKey: false }
