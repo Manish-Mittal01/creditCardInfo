@@ -20,18 +20,37 @@ module.exports.updateMessages = async (req, res) => {
         if (!user) return ResponseService.failed(res, "Invalid userid or token", StatusCode.unauthorized);
 
         // const messages = Message.push(message)
+        const messages = await Message.findOne({
+            userId: userid
+        })
 
-        const result = await Message
-            .updateOne(
-                { userId: userid },
-                {
-                    $push: {
-                        message: message,
-                    },
-                }
-            )
+        let result = []
 
-        return ResponseService.success(res, "New message added successfully", result)
+        if (messages) {
+            result = await Message
+                .updateOne(
+                    { userId: userid },
+                    {
+                        $push: {
+                            message: message,
+                        },
+                    }
+                )
+        }
+        else {
+            const newMessage = {
+                userId: userid,
+                message: message
+            }
+            const myMessage = new Message(newMessage)
+            result = await myMessage.save()
+        }
+
+
+
+        const allMessages = await Message.find()
+
+        return ResponseService.success(res, "New message added successfully", allMessages)
 
     }
     catch (error) {

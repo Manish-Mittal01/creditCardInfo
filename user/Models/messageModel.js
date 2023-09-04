@@ -9,6 +9,7 @@ const messageSchema = Schema(
         message: {
             type: [String],
             required: true,
+            default: []
         },
     },
     { timestamps: true, versionKey: false }
