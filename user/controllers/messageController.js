@@ -1,7 +1,6 @@
 const User = require("../Models/UserModel");
 const { StatusCode } = require("../../common/Constants");
 const { ResponseService } = require("../../common/responseService");
-const Credit = require("../Models/creditDetails");
 const Message = require("../Models/messageModel");
 
 module.exports.updateMessages = async (req, res) => {
@@ -22,7 +21,7 @@ module.exports.updateMessages = async (req, res) => {
 
         // const messages = Message.push(message)
 
-        const result = await referralModel
+        const result = await Message
             .updateOne(
                 { userId: userid },
                 {
