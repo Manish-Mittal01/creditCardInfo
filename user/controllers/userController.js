@@ -38,17 +38,17 @@ module.exports.sendOtp = async (req, res) => {
    your OTP is ${OTP}.
    Never share your otp with anyone`;
 
-    return ResponseService.success(res, `otp sent ${OTP}`)
+    // return ResponseService.success(res, `otp sent ${OTP}`)
 
-    // await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Qb5zd3MBhowEqeS6R4vDCukYFIyWKNg0H1OxTinrUZ2jXmtGJLGv7iIJkMZx5nSqhWRltozpOHYV1yC3&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
-    //   .then((resp) => {
-    //     return ResponseService.success(res, `OTP sent successfully ${OTP}`)
-    //   })
-    //   .catch((err) => {
-    //     console.log("otp err", err)
-    //     return ResponseService.failed(res, " something wrong happend while sending otp", StatusCode.serverError)
+    await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Qb5zd3MBhowEqeS6R4vDCukYFIyWKNg0H1OxTinrUZ2jXmtGJLGv7iIJkMZx5nSqhWRltozpOHYV1yC3&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
+      .then((resp) => {
+        return ResponseService.success(res, `OTP sent successfully ${OTP}`)
+      })
+      .catch((err) => {
+        console.log("otp err", err)
+        return ResponseService.failed(res, " something wrong happend while sending otp", StatusCode.serverError)
 
-    //   });
+      });
 
   }
   catch (error) {
@@ -59,10 +59,9 @@ module.exports.sendOtp = async (req, res) => {
 
 module.exports.register = async (req, res) => {
   try {
-    const { firstName, lastName, userName, mobile, password, otp, email } = req.body;
+    const { firstName, mobile, password, otp, email } = req.body;
 
     if (!firstName) return ResponseService.failed(res, "firstName is required", StatusCode.badRequest);
-    if (!userName) return ResponseService.failed(res, "userName is required", StatusCode.badRequest);
     if (!password) return ResponseService.failed(res, "password is required", StatusCode.badRequest);
     if (!email) return ResponseService.failed(res, "email is required", StatusCode.badRequest);
     if (!mobile) return ResponseService.failed(res, "mobile is required", StatusCode.badRequest);
@@ -84,8 +83,6 @@ module.exports.register = async (req, res) => {
 
     const newUser = {
       firstName,
-      lastName,
-      userName,
       mobile,
       password,
       email
