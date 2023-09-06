@@ -22,7 +22,7 @@ module.exports.getUserMessages = async (req, res) => {
         let messages = await Message.findOne({
             userId: userid
         });
-        if (!messages) return ResponseService.failed(res, "Invalid userid", StatusCode.badRequest)
+        if (!messages) return ResponseService.failed(res, "No message found for this user", StatusCode.badRequest)
 
 
         const result = {
