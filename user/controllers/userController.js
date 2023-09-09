@@ -40,7 +40,7 @@ module.exports.sendOtp = async (req, res) => {
 
     // return ResponseService.success(res, `otp sent ${OTP}`)
 
-    await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Qb5zd3MBhowEqeS6R4vDCukYFIyWKNg0H1OxTinrUZ2jXmtGJLGv7iIJkMZx5nSqhWRltozpOHYV1yC3&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
+    await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=Z4zBg1UiKflvSCmPQFh3cr9Ox0n8IoRTuaN5bwqA2kVWsyYeJDjnJYbCzvfkp5UVM2qKouLIBhHxRNtQ&route=q&message=${msg}&language=english&flash=0&numbers=${mobile}`)
       .then((resp) => {
         return ResponseService.success(res, `OTP sent successfully ${OTP}`)
       })
